@@ -1,14 +1,24 @@
+'use client'
+import { motion } from 'framer-motion'
+
 export default function EmploymentStep({ onNext, onBack }: { onNext: (e: string) => void, onBack: () => void }) {
-  const btnClass = "w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition-all text-black text-left";
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold text-gray-900">Employment Status</h2>
+      <h2 className="text-2xl font-bold text-gray-900 text-center">Employment Status</h2>
       <div className="space-y-3">
         {['Not working', 'Full time', 'Part time'].map(e => (
-          <button key={e} onClick={() => onNext(e)} className={btnClass}>{e}</button>
+          <motion.button 
+            key={e} 
+            whileHover={{ scale: 1.01, borderColor: '#3b82f6' }}
+            whileTap={{ scale: 0.99 }}
+            onClick={() => onNext(e)} 
+            className="w-full p-4 border border-gray-200 rounded-xl hover:shadow-md transition-all text-gray-800 font-medium text-left"
+          >
+            {e}
+          </motion.button>
         ))}
       </div>
-      <button onClick={onBack} className="text-sm text-gray-500 underline hover:text-gray-800">Back</button>
+      <button onClick={onBack} className="w-full text-sm text-gray-400 hover:text-gray-600 transition">Back</button>
     </div>
   )
 }
