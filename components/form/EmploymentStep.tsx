@@ -5,24 +5,26 @@ export default function EmploymentStep({ onNext, onBack }: { onNext: (e: string)
   const options = ['Not working', 'Full time', 'Part time'];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-black text-center">Employment Status</h2>
-      <div className="space-y-3">
-        {options.map(e => (
+    <div className="flex flex-col h-full justify-center space-y-8">
+      <h2 className="text-3xl font-bold text-center text-slate-50">Employment Status</h2>
+      
+      <div className="space-y-4">
+        {options.map((e) => (
           <motion.button 
             key={e} 
-            whileHover={{ scale: 1.01, borderColor: '#00000000' }}
-            whileTap={{ scale: 0.99 }}
+            whileHover={{ scale: 1.02, backgroundColor: '#334155' }} // Slate 700
+            whileTap={{ scale: 0.98 }}
             onClick={() => onNext(e)} 
-            className="w-full p-4 border border-white rounded-xl bg-white hover:bg-gray-200 transition-all text-black font-medium text-left"
+            className="w-full p-6 border-2 border-slate-700 rounded-2xl bg-slate-800 text-slate-200 font-semibold text-lg text-left hover:border-sky-500 transition-colors"
           >
             {e}
           </motion.button>
         ))}
       </div>
+
       <button 
         onClick={onBack} 
-        className="w-full text-sm text-black hover:text-gray-600 transition mt-4"
+        className="text-sm text-slate-400 hover:text-slate-200 transition-colors mt-4 text-center"
       >
         Back
       </button>
