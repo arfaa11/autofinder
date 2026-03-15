@@ -2,11 +2,12 @@
 import { motion } from 'framer-motion'
 
 export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any) {
-  const inputClass = "w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all outline-none text-black";
+  // inputClass uses a semi-transparent dark blue base with a light blue focus ring
+  const inputClass = "w-full p-4 bg-sky-950/40 border border-sky-800 rounded-xl focus:bg-sky-900/60 focus:ring-2 focus:ring-sky-400 outline-none text-white placeholder-sky-400 transition-all";
   
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-900 text-center">Your Details</h2>
+      <h2 className="text-2xl font-bold text-white text-center mb-6">Your Details</h2>
       
       {/* Input Fields */}
       <input 
@@ -36,11 +37,11 @@ export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any)
       />
       
       {/* Navigation Buttons */}
-      <div className="flex gap-3 pt-4">
+      <div className="flex gap-3 pt-6">
         <button 
           onClick={onBack} 
           disabled={status === 'submitting'}
-          className="w-1/3 bg-gray-100 text-gray-600 p-4 rounded-xl font-medium hover:bg-gray-200 transition disabled:opacity-50"
+          className="w-1/3 bg-white text-black p-4 rounded-xl font-medium hover:bg-gray-200 transition disabled:opacity-50"
         >
           Back
         </button>
@@ -50,7 +51,7 @@ export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any)
           whileTap={{ scale: 0.98 }}
           onClick={onSubmit} 
           disabled={status === 'submitting'} 
-          className="w-2/3 bg-blue-600 text-white p-4 rounded-xl font-bold hover:bg-blue-700 transition disabled:bg-blue-400 disabled:cursor-not-allowed"
+          className="w-2/3 bg-green-600 text-black p-4 rounded-xl font-bold hover:bg-green-700 transition disabled:bg-green-600 disabled:cursor-not-allowed"
         >
           {status === 'submitting' ? 'Submitting...' : 'Finish'}
         </motion.button>

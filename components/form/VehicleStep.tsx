@@ -1,36 +1,61 @@
 'use client'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 
 export default function VehicleStep({ onNext }: { onNext: (v: string) => void }) {
-  const vehicles = [
-    { name: 'SUV' }, { name: 'Sedan' }, { name: 'Truck' }, { name: 'Van' },
-    { name: 'Coupe' }, { name: 'Hatchback' }, { name: 'Convertible' }, { name: 'Wagon' }
-  ];
-  
+  const vehicles = ['SUV', 'Sedan', 'Truck', 'Van', 'Coupe', 'Hatchback', 'Convertible', 'Wagon'];
+  const displayVehicles = [...vehicles, ...vehicles, ...vehicles];
+  const x = useMotionValue(0);
+
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900">Choose Your Vehicle</h2>
-        <p className="text-gray-500 text-sm">Select the type you're looking for</p>
+    <div className="flex flex-col h-full w-full justify-center items-center overflow-hidden [perspective:2000px]">
+      
+      <div className="text-center mb-10">
+        <h2 className="text-3xl font-bold text-white tracking-tight">Select Your Vehicle</h2>
+        <p className="text-sky-100 text-sm mt-2">Spin the wheel to choose your ride</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        {vehicles.map((v) => (
-          <motion.button 
-            key={v.name} 
-            whileHover={{ y: -4, borderColor: '#3b82f6' }} 
-            whileTap={{ scale: 0.97 }}
-            onClick={() => onNext(v.name)} 
-            className="group flex flex-col items-center bg-white border border-gray-200 rounded-2xl p-3 shadow-sm hover:shadow-lg transition-all duration-300"
-          >
-            {/* Image Placeholder - Now larger for better UI balance */}
-            <div className="w-full h-24 bg-gray-100 rounded-xl mb-3 flex items-center justify-center text-gray-400 group-hover:bg-blue-50 transition-colors">
-              <span className="text-[10px] uppercase font-bold tracking-wider">Image Area</span>
-            </div>
-            <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 transition-colors">{v.name}</span>
-          </motion.button>
-        ))}
+      <div className="flex items-center justify-center w-full">
+        <motion.div 
+          drag="x"
+          style={{ x }}
+          dragConstraints={{ left: -2200, right: 0 }}
+          dragElastic={0.15}
+          className="flex items-center gap-20 cursor-grab active:cursor-grabbing"
+        >
+          {displayVehicles.map((v, i) => (
+            <VehicleCard key={i} name={v} x={x} index={i} onClick={() => onNext(v)} />
+          ))}
+        </motion.div>
       </div>
     </div>
+  )
+}
+
+function VehicleCard({ name, x, index, onClick }: any) {
+  const offset = index * 400;
+  
+  const rotateY = useTransform(x, [offset - 600, offset, offset + 600], [25, 0, -25]);
+  const scale = useTransform(x, [offset - 600, offset, offset + 600], [0.85, 1.15, 0.85]);
+
+  return (
+    <motion.button
+      onClick={onClick}
+      style={{ rotateY, scale }}
+      // REMOVED SHADOWS: Hover only scales and lifts, no box-shadow
+      whileHover={{ 
+        y: -15, 
+        scale: 1.05, 
+        transition: { duration: 0.2 } 
+      }}
+      whileTap={{ scale: 1.025, rotateY: 0 }} 
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      // BORDER: Replaced shadow-2xl with a clean, thick border
+      className="flex-shrink-0 w-72 h-96 bg-white rounded-[2.5rem] flex flex-col items-center justify-center p-8 border-[6px] border-sky-100 hover:border-sky-400 transition-colors"
+    >
+      <div className="w-full h-48 bg-sky-50 rounded-3xl mb-8 flex items-center justify-center font-black text-sky-400 text-sm tracking-widest uppercase">
+        Vehicle Image
+      </div>
+      <span className="text-3xl font-black text-blue-950">{name}</span>
+    </motion.button>
   )
 }
