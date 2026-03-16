@@ -1,20 +1,63 @@
 @import "tailwindcss";
 
-:root {
-  /* Monochrome Palette */
-  --bg-main: #000000;      /* Pure Black */
-  --card-bg: #0a0a0a;      /* Near Black */
-  --border: #262626;       /* Neutral Grey Border */
-  --text-main: #ffffff;    /* Pure White */
-  --text-muted: #a3a3a3;   /* Neutral Grey Text */
-  --accent: #ffffff;       /* Pure White Accent */
+/* Theme Variables for central maintenance */
+@theme {
+  --nardo-grey: #6D6E71;
+  --input-bg: #aaaaaa;
+  --placeholder: #666666;
+  --font-sans: "Montserrat", sans-serif;
 }
 
 body {
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  font-family: 'Inter', sans-serif;
+  background-color: var(--nardo-grey);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  /* Ensures no accidental scrollbar jumps */
+  overflow-x: hidden; 
 }
 
+/* Modular Components */
+.form-container {
+  @apply bg-[#ffffff] p-12 rounded-[2rem] w-full max-w-xl min-h-[600px] flex flex-col justify-center overflow-hidden;
+}
+
+/* Button Component */
+.btn-tile {
+  @apply w-full p-6 bg-[var(--input-bg)] rounded-[2rem] text-black text-left 
+         transition-all hover:bg-[#999999] active:scale-95;
+}
+
+/* Button Component */
+.car-tile {
+  /* Removed active:scale-95 here, let Framer Motion handle scaling to avoid jumpy transitions */
+  @apply w-full p-6 bg-white rounded-[2rem] text-black text-left border-2 border-transparent transition-colors duration-300;
+}
+
+/* Add a hover effect that uses your existing styling scheme */
+.car-tile:hover {
+  @apply border-black;
+}
+
+/* Input Components */
+.input-wrapper {
+  @apply relative w-full;
+}
+
+.input-field-with-icon {
+  @apply w-full p-4 pl-12 bg-[var(--input-bg)] rounded-[2rem] outline-none 
+         text-black placeholder-[var(--placeholder)] transition-all 
+         focus:ring-2 focus:ring-black;
+}
+
+.input-icon {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 text-[var(--placeholder)] transition-colors;
+}
+
+/* Interactive Feedback */
+.input-wrapper:focus-within .input-icon {
+  @apply text-black;
+}
+
+/* Utilities */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
