@@ -5,17 +5,17 @@ export default function IncomeStep({ onNext, onBack }: { onNext: (i: string) => 
   const options = ['<$1,500', '$1,500 - $3,000', '>$3,000'];
 
   return (
-    <div className="flex flex-col h-full justify-center space-y-8">
-      <h2 className="text-3xl font-bold text-center text-slate-50">Monthly Income</h2>
+    <div className="flex flex-col space-y-6">
+      <h2 className="text-3xl text-center text-black">Monthly Income</h2>
       
       <div className="space-y-4">
         {options.map((i) => (
           <motion.button 
             key={i} 
-            whileHover={{ scale: 1.02, backgroundColor: '#334155' }} 
+            whileHover={{ scale: 1.02 }} 
             whileTap={{ scale: 0.98 }}
             onClick={() => onNext(i)} 
-            className="w-full p-6 border-2 border-slate-700 rounded-2xl bg-slate-800 text-slate-200 font-semibold text-lg text-left hover:border-sky-500 transition-colors"
+            className="btn-tile"
           >
             {i}
           </motion.button>
@@ -24,7 +24,7 @@ export default function IncomeStep({ onNext, onBack }: { onNext: (i: string) => 
 
       <button 
         onClick={onBack} 
-        className="text-sm text-slate-400 hover:text-slate-200 transition-colors mt-4 text-center"
+        className="text-sm text-[#666666] text-center transition-colors hover:text-black"
       >
         Back
       </button>

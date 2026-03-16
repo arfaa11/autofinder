@@ -1,49 +1,36 @@
 'use client'
 import { motion } from 'framer-motion'
+import { User, Building2, MapPin, Phone, Mail } from 'lucide-react'
 
 export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any) {
-  // Updated to match the Slate/Sky theme: Slate-800 background, Slate-700 border, Sky focus
-  const inputClass = "w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-2xl focus:border-sky-500 outline-none text-slate-100 placeholder-slate-400 transition-all";
-  
   return (
-    <div className="flex flex-col h-full justify-center space-y-6">
-      <h2 className="text-3xl font-bold text-center text-slate-50 mb-4">Your Details</h2>
+    <div className="flex flex-col space-y-6">
+      <h2 className="text-3xl text-center text-black">Your Details</h2>
       
-      {/* Input Fields */}
       <div className="space-y-4">
-        <input 
-          placeholder="Full Name" 
-          onChange={e => onUpdate('name', e.target.value)} 
-          className={inputClass} 
-        />
-        <input 
-          placeholder="City" 
-          onChange={e => onUpdate('city', e.target.value)} 
-          className={inputClass} 
-        />
-        <input 
-          placeholder="Postal Code" 
-          onChange={e => onUpdate('postal_code', e.target.value)} 
-          className={inputClass} 
-        />
-        <input 
-          placeholder="Phone (10 digits)" 
-          onChange={e => onUpdate('phone', e.target.value)} 
-          className={inputClass} 
-        />
-        <input 
-          placeholder="Email" 
-          onChange={e => onUpdate('email', e.target.value)} 
-          className={inputClass} 
-        />
+        {[
+          { icon: User, key: 'name', placeholder: 'Full Name' },
+          { icon: Building2, key: 'city', placeholder: 'City' },
+          { icon: MapPin, key: 'postal_code', placeholder: 'Postal Code' },
+          { icon: Phone, key: 'phone', placeholder: 'Phone (xxx-xxx-xxxx)' },
+          { icon: Mail, key: 'email', placeholder: 'Email' }
+        ].map(({ icon: Icon, key, placeholder }) => (
+          <div key={key} className="input-wrapper">
+            <Icon className="input-icon" size={20} strokeWidth={2} />
+            <input 
+              placeholder={placeholder} 
+              onChange={e => onUpdate(key, e.target.value)} 
+              className="input-field-with-icon" 
+            />
+          </div>
+        ))}
       </div>
       
-      {/* Navigation Buttons */}
       <div className="flex gap-4 pt-4">
         <button 
           onClick={onBack} 
           disabled={status === 'submitting'}
-          className="w-1/3 bg-slate-800 text-slate-300 p-4 rounded-2xl font-semibold hover:bg-slate-700 transition-colors disabled:opacity-50"
+          className="w-1/3 p-4 bg-[#aaaaaa] rounded-[2rem] text-black transition-colors hover:bg-[#999999] disabled:opacity-50"
         >
           Back
         </button>
@@ -53,7 +40,7 @@ export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any)
           whileTap={{ scale: 0.98 }}
           onClick={onSubmit} 
           disabled={status === 'submitting'} 
-          className="w-2/3 bg-sky-500 text-white p-4 rounded-2xl font-bold hover:bg-sky-600 transition-colors disabled:bg-slate-600 disabled:cursor-not-allowed"
+          className="w-2/3 p-4 bg-black text-white rounded-[2rem] transition-colors hover:bg-neutral-800 disabled:bg-neutral-400"
         >
           {status === 'submitting' ? 'Submitting...' : 'Finish'}
         </motion.button>
