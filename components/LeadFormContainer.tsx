@@ -44,8 +44,8 @@ export default function LeadFormContainer() {
               className="text-center"
             >
               <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-3xl font-bold text-black">Thank You.</h2>
-              <p className="text-[#666666] mt-2">Your request has been processed.</p>
+              <h2 className="text-3xl font-bold text-black">Thank you!</h2>
+              <p className="text-black mt-2">Our team will be reaching out to you soon to assist you with your vehicle needs.</p>
             </motion.div>
           ) : (
             <motion.div 
