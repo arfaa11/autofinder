@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} font-sans antialiased bg-white h-screen flex flex-col`}>
         
         {/* Header - Fixed height, centered */}
-        <header className="h-32 flex-shrink-0 flex justify-center items-center bg-white z-50">
+        <header className="h-40 flex-shrink-0 flex flex-col justify-center items-center bg-white z-50 space-y-2">
           <Image 
             src="/logo.png" 
             alt="autofinder Logo" 
@@ -32,6 +32,9 @@ export default function RootLayout({
             height={60} 
             priority
           />
+          <p className="text-lg text-center text-black">
+            Canada's #1 platform for finding your next car with confidence.
+          </p>
         </header>
 
         {/* Content Area - Fills remaining space, scrolls only if necessary */}
