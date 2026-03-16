@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google"; // 1. Import Montserrat
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// 2. Configure Montserrat
+const montserrat = Montserrat({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["700"], // You wanted Montserrat Bold
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}
-      >
-        {/* Removed flex, items-center, and justify-center to stop forcing a "card" position */}
+      {/* 3. Apply the font class and font-variable to the html/body */}
+      <body className={`${montserrat.variable} font-sans antialiased`}>
         <main className="w-full">
           {children}
         </main>
