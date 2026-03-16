@@ -1,8 +1,16 @@
 'use client'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function VehicleStep({ onNext }: { onNext: (v: string) => void }) {
-  const vehicles = ['Sedan', 'SUV', 'Truck', 'Coupe', 'Hatchback', 'Convertible', 'Van'];
+  const vehicles = [
+    { name: 'SUV', image: '/images/suv.png' },
+    { name: 'Sedan', image: '/images/sedan.png' },
+    { name: 'Truck', image: '/images/truck.png' },
+    { name: 'Van', image: '/images/van.png' },
+    { name: 'Coupe', image: '/images/coupe.png' },
+    { name: 'Hatchback', image: '/images/hatchback.png' },
+  ];
 
   return (
     <div className="flex flex-col w-full">
@@ -10,40 +18,33 @@ export default function VehicleStep({ onNext }: { onNext: (v: string) => void })
         <h2 className="text-3xl text-black">Select Your Vehicle</h2>
       </div>
 
-      {/* The scrollable viewport with snap-scrolling */}
       <div className="flex w-full overflow-x-auto snap-x snap-mandatory gap-6 px-[calc(50%-128px)] scrollbar-hide py-10">
         {vehicles.map((v, i) => (
-          <VehicleCard key={i} name={v} onClick={() => onNext(v)} />
+          <VehicleCard key={i} vehicle={v} onClick={() => onNext(v.name)} />
         ))}
       </div>
     </div>
   )
 }
 
-function VehicleCard({ name, onClick }: { name: string, onClick: () => void }) {
+function VehicleCard({ vehicle, onClick }: { vehicle: { name: string, image: string }, onClick: () => void }) {
   return (
     <motion.button
       onClick={onClick}
-      /* btn-tile: modular base styling
-         snap-center: ensures the card locks into the center of the viewport
-         flex-shrink-0: keeps the cards from squishing 
-      */
-      className="car-tile snap-center flex-shrink-0 w-64 h-80 flex flex-col items-center justify-center border border-white hover:border-black transition-colors"
-      
-      // Snappy, responsive interaction animations
-      whileHover={{ y: -5, scale: 1.05 }}
+      className="car-tile snap-center flex-shrink-0 w-64 h-80 flex flex-col items-center justify-center border-2 border-transparent hover:border-black transition-colors"
+      whileHover={{ y: -5, scale: 1.02 }}
       whileTap={{ scale: 0.95 }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 25 
-      }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
-      {/* Visual Placeholder for Vehicle Image */}
-      <div className="w-full h-48 bg-gray-300 rounded-[1.5rem] mb-6 flex items-center justify-center font-bold text-[#666666] uppercase tracking-widest">
-        {name}
+      <div className="w-full h-48 mb-6 relative overflow-hidden">
+        <Image 
+          src={vehicle.image} 
+          alt={vehicle.name} 
+          fill 
+          className="object-contain mix-blend-multiply" 
+        />
       </div>
-      <span className="text-xl text-black font-bold">{name}</span>
+      <span className="text-xl text-black font-bold">{vehicle.name}</span>
     </motion.button>
   )
 }
