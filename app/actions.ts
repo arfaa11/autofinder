@@ -1,31 +1,27 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
+import { Resend } from 'resend'
+
+// Initialize Resend with your environment variable
+const resend = new Resend(process.env.RESEND_API_KEY!)
 
 export async function submitLead(data: any) {
-  // 1. Sanitize Phone (Preserved functionality)
+  // 1. Sanitize Phone
   const phone = data.phone.replace(/\D/g, '');
 
-  // 2. Validate Phone (Preserved functionality)
-  if (phone.length !== 10) {
-    throw new Error("Phone number must be exactly 10 digits.");
-  }
-
-  // 3. Validate Email (Preserved functionality)
+  // 2. Validation Checks
+  if (phone.length !== 10) throw new Error("Phone number must be exactly 10 digits.");
+  
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(data.email)) {
-    throw new Error("Please enter a valid email address.");
-  }
-
-  // 4. Validate Postal Code (New functionality)
+  if (!emailRegex.test(data.email)) throw new Error("Please enter a valid email address.");
+  
   const postalRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-  if (!postalRegex.test(data.postal_code)) {
-    throw new Error("Please enter a valid Canadian postal code (e.g., T5A 1A1).");
-  }
+  if (!postalRegex.test(data.postal_code)) throw new Error("Invalid postal code.");
 
   const supabase = await createClient()
 
-  // 5. Database Insert (Includes all new and old fields)
+  // 3. Database Insert
   const { error } = await supabase.from('leads').insert({
     name: data.name,
     phone: phone,
@@ -42,6 +38,27 @@ export async function submitLead(data: any) {
   if (error) {
     console.error("SUPABASE INSERT ERROR:", error)
     throw new Error("Database error. Please try again later.")
+  }
+
+  // 4. Trigger Email Notification via Resend
+  try {
+    await resend.emails.send({
+      from: 'AutoFinder <onboarding@resend.dev>',
+      to: 'arfaamumtaz@hotmail.com',
+      subject: `New Lead: ${data.name}`,
+      html: `
+        <h2>New Lead Details</h2>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Vehicle:</strong> ${data.vehicle_type}</p>
+        <p><strong>City:</strong> ${data.city}</p>
+        <p><strong>Postal Code:</strong> ${data.postal_code.toUpperCase()}</p>
+      `
+    });
+  } catch (err) {
+    // We log the error but don't stop the user, as the database save succeeded
+    console.error("Email notification failed:", err);
   }
 
   return { success: true }
