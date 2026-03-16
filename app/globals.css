@@ -9,7 +9,6 @@
 }
 
 body {
-  background-color: var(--nardo-grey);
   font-family: var(--font-sans);
   font-weight: 700;
   /* Ensures no accidental scrollbar jumps */
