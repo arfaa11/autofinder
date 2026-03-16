@@ -10,8 +10,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "AutoFinder Lead Form",
-  description: "Seamless lead capture",
+  title: "autofinder",
+  description: "Helping Canadians find their perfect ride with confidence.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
         <header className="h-32 flex-shrink-0 flex justify-center items-center bg-white z-50">
           <Image 
             src="/logo.png" 
-            alt="AutoFinder Logo" 
+            alt="autofinder Logo" 
             width={240} 
             height={60} 
             priority
