@@ -1,43 +1,53 @@
 @import "tailwindcss";
 
-/* Theme Variables for central maintenance */
+/* colors and fonts */
 @theme {
   --nardo-grey: #6D6E71;
   --input-bg: #aaaaaa;
   --placeholder: #666666;
+  --brand-blue: #2563eb; 
   --font-sans: "Montserrat", sans-serif;
 }
 
+/* body setup and scrolling */
 body {
   font-family: var(--font-sans);
   font-weight: 700;
-  /* Ensures no accidental scrollbar jumps */
-  overflow-x: hidden; 
+  background-color: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto; 
 }
 
-/* Modular Components */
+/* main page wrapper */
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* form box styling */
 .form-container {
-  @apply bg-[#ffffff] p-12 rounded-[2rem] w-full max-w-xl min-h-[600px] flex flex-col justify-center overflow-hidden;
+  @apply bg-[#ffffff] p-8 md:p-12 rounded-[2rem] w-full max-w-xl min-h-[550px] flex flex-col justify-center overflow-hidden;
 }
 
-/* Button Component */
+/* clickable button tiles */
 .btn-tile {
-  @apply w-full p-6 bg-[var(--input-bg)] rounded-[2rem] text-black text-left 
+  @apply w-full p-6 bg-[var(--input-bg)] rounded-[4rem] text-black text-left 
          transition-all hover:bg-[#999999] active:scale-95;
 }
 
-/* Button Component */
+/* car selection boxes */
 .car-tile {
-  /* Removed active:scale-95 here, let Framer Motion handle scaling to avoid jumpy transitions */
   @apply w-full p-6 bg-white rounded-[2rem] text-black text-left border-2 border-transparent transition-colors duration-300;
 }
 
-/* Add a hover effect that uses your existing styling scheme */
 .car-tile:hover {
   @apply border-black;
 }
 
-/* Input Components */
+/* input fields and icons */
 .input-wrapper {
   @apply relative w-full;
 }
@@ -52,11 +62,23 @@ body {
   @apply absolute left-4 top-1/2 -translate-y-1/2 text-[var(--placeholder)] transition-colors;
 }
 
-/* Interactive Feedback */
+/* highlight icon on click */
 .input-wrapper:focus-within .input-icon {
   @apply text-black;
 }
 
-/* Utilities */
+/* smooth scroll settings */
+html {
+  scroll-behavior: smooth;
+}
+
+/* hide scrollbars */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* mobile text fixes */
+@media (max-width: 640px) {
+  h2 {
+    @apply text-3xl;
+  }
+}
