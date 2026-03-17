@@ -15,7 +15,7 @@ export default function VehicleStep({ onNext }: { onNext: (v: string) => void })
   return (
     <div className="flex flex-col w-full">
       <div className="text-center mb-4">
-        <h2 className="text-3xl text-black">Select Your Vehicle</h2>
+        <h2 className="text-3xl text-black">Select Vehicle Type</h2>
       </div>
 
       <div className="flex w-full overflow-x-auto snap-x snap-mandatory gap-6 px-[calc(50%-128px)] scrollbar-hide py-10">
