@@ -3,7 +3,7 @@ import HowItWorks from '@/components/HowItWorks'
 
 /** tell cloudflare that this page is dynamic, 
  * not just a collection of static files */
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 /**
  * home page entry point. 
