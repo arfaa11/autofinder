@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react'
-import { submitLead } from '@/app/actions'
 import VehicleStep from './form/VehicleStep'
 import EmploymentStep from './form/EmploymentStep'
 import IncomeStep from './form/IncomeStep'
@@ -135,11 +134,26 @@ export default function LeadFormContainer() {
                   onBack={() => paginate(3)} 
                   onSubmit={async () => { 
                     setStatus('submitting'); 
-                    const result = await submitLead(formData); 
-                    if (result?.success) {
-                      setStatus('success'); 
-                    } else {
-                      alert("Error: " + (result?.error || "Submission failed"));
+                    try {
+                      const response = await fetch('/api/leads', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                      });
+
+                      const result = await response.json();
+
+                      if (result.success) {
+                        setStatus('success'); 
+                      } else {
+                        alert("Error: " + (result.error || "Submission failed"));
+                        setStatus('idle');
+                      }
+                    } catch (err) {
+                      console.error("Submission failed:", err);
+                      alert("Network error. Please try again.");
                       setStatus('idle');
                     }
                   }} 

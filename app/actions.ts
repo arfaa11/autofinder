@@ -1,4 +1,5 @@
-'use server'
+/**
+ * 'use server'
 
 import { createClient } from '@/utils/supabase/server'
 import { Resend } from 'resend'
@@ -70,3 +71,4 @@ export async function submitLead(data: any) {
     return { success: false, error: err.message };
   }
 }
+  */
