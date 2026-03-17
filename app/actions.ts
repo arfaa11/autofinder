@@ -1,4 +1,7 @@
 'use server'
+/** tell cloudflare that this page is dynamic, 
+ * not just a collection of static files */
+//export const runtime = 'edge';
 
 import { createClient } from '@/utils/supabase/server'
 import { Resend } from 'resend'
