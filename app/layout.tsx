@@ -42,7 +42,7 @@ export default function RootLayout({
               bad credit? <span className="text-blue-600">no problem.</span>
             </h1>
             <p className="text-xl md:text-2xl text-black mt-2 font-medium">
-              get approved for a car in edmonton today.
+              Get approved for a car in Edmonton today.
             </p>
           </div>
         </header>
