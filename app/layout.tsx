@@ -36,6 +36,7 @@ export default function RootLayout({
             width={220} 
             height={55} 
             priority
+            unoptimized
           />
           <div className="text-center px-4">
             <h1 className="text-3xl md:text-5xl uppercase tracking-tight font-black">

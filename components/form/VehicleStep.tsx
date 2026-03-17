@@ -45,6 +45,7 @@ function VehicleCard({ vehicle, onClick }: { vehicle: { name: string, image: str
           alt={vehicle.name} 
           fill 
           className="object-contain mix-blend-multiply" 
+          unoptimized
         />
       </div>
       <span className="text-xl text-black font-bold uppercase">{vehicle.name}</span>
