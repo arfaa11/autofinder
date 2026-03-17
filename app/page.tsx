@@ -1,6 +1,10 @@
 import LeadFormContainer from '@/components/LeadFormContainer'
 import HowItWorks from '@/components/HowItWorks'
 
+// tell cloudflare that this page is dynamic, 
+// not just a collection of static files
+export const runtime = 'edge';
+
 /**
  * home page entry point. 
  * acts as a high-level wrapper for the primary landing page components.
