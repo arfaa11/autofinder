@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 
 export default function EmploymentStep({ onNext, onBack }: { onNext: (e: string) => void, onBack: () => void }) {
-  const options = ['Not working', 'Full time', 'Part time'];
+  const options = ['Not working', 'Full-time', 'Part-time'];
 
   return (
     <div className="flex flex-col space-y-6">
