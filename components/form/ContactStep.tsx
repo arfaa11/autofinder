@@ -12,7 +12,7 @@ export default function ContactStep({ onUpdate, onBack, onSubmit, status }: any)
           { icon: User, key: 'name', placeholder: 'Full Name' },
           { icon: Building2, key: 'city', placeholder: 'City' },
           { icon: MapPin, key: 'postal_code', placeholder: 'Postal Code' },
-          { icon: Phone, key: 'phone', placeholder: 'Phone (xxx-xxx-xxxx)' },
+          { icon: Phone, key: 'phone', placeholder: 'Phone (10 digits)' },
           { icon: Mail, key: 'email', placeholder: 'Email' }
         ].map(({ icon: Icon, key, placeholder }) => (
           <div key={key} className="input-wrapper">
