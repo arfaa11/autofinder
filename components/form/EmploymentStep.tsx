@@ -24,9 +24,9 @@ export default function EmploymentStep({ onNext, onBack }: { onNext: (e: string)
 
       <button 
         onClick={onBack} 
-        className="text-sm text-[#666666] text-center transition-colors hover:text-black"
-      >
-        Back
+        className="w-1/3 p-4 bg-black rounded-[2rem] text-white transition-colors hover:bg-neutral-800 disabled:opacity-50 self-center"
+        >
+          Back
       </button>
     </div>
   )
