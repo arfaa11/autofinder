@@ -135,7 +135,7 @@ export default function LeadFormContainer() {
                   onSubmit={async () => { 
                     setStatus('submitting'); 
                     try {
-                      const response = await fetch('/api/leads', {
+                      const response = await fetch('/api', {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',
