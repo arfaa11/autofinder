@@ -35,7 +35,7 @@ function VehicleCard({ vehicle, onClick }: { vehicle: { name: string, image: str
       type="button"
       onClick={onClick}
       className="car-tile snap-center flex-shrink-0 w-64 h-80 flex flex-col items-center justify-center border-2 border-transparent hover:border-black transition-colors"
-      whileHover={{ y: -5, scale: 1.02 }}
+      whileHover={{ y: -5, scale: 1.03 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
