@@ -1,8 +1,8 @@
 import LeadFormContainer from '@/components/LeadFormContainer'
 import HowItWorks from '@/components/HowItWorks'
 
-// tell cloudflare that this page is dynamic, 
-// not just a collection of static files
+/** tell cloudflare that this page is dynamic, 
+ * not just a collection of static files */
 export const runtime = 'edge';
 
 /**
