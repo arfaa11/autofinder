@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 export default function VehicleStep({ onNext }: { onNext: (v: string) => void }) {
+  // list of available vehicle categories
   const vehicles = [
     { name: 'SUV', image: '/images/suv.png' },
     { name: 'Sedan', image: '/images/sedan.png' },
@@ -15,9 +16,10 @@ export default function VehicleStep({ onNext }: { onNext: (v: string) => void })
   return (
     <div className="flex flex-col w-full">
       <div className="text-center mb-4">
-        <h2 className="text-3xl text-black">Select Vehicle Type</h2>
+        <h2 className="text-3xl text-black font-montserrat uppercase">select vehicle type</h2>
       </div>
 
+      {/* horizontal scroll container for car selection */}
       <div className="flex w-full overflow-x-auto snap-x snap-mandatory gap-6 px-[calc(50%-128px)] scrollbar-hide py-10">
         {vehicles.map((v, i) => (
           <VehicleCard key={i} vehicle={v} onClick={() => onNext(v.name)} />
@@ -30,6 +32,7 @@ export default function VehicleStep({ onNext }: { onNext: (v: string) => void })
 function VehicleCard({ vehicle, onClick }: { vehicle: { name: string, image: string }, onClick: () => void }) {
   return (
     <motion.button
+      type="button"
       onClick={onClick}
       className="car-tile snap-center flex-shrink-0 w-64 h-80 flex flex-col items-center justify-center border-2 border-transparent hover:border-black transition-colors"
       whileHover={{ y: -5, scale: 1.02 }}
@@ -44,7 +47,7 @@ function VehicleCard({ vehicle, onClick }: { vehicle: { name: string, image: str
           className="object-contain mix-blend-multiply" 
         />
       </div>
-      <span className="text-xl text-black font-bold">{vehicle.name}</span>
+      <span className="text-xl text-black font-bold uppercase">{vehicle.name}</span>
     </motion.button>
   )
 }

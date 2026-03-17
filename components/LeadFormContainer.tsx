@@ -135,8 +135,13 @@ export default function LeadFormContainer() {
                   onBack={() => paginate(3)} 
                   onSubmit={async () => { 
                     setStatus('submitting'); 
-                    await submitLead(formData); 
-                    setStatus('success'); 
+                    const result = await submitLead(formData); 
+                    if (result?.success) {
+                      setStatus('success'); 
+                    } else {
+                      alert("Error: " + (result?.error || "Submission failed"));
+                      setStatus('idle');
+                    }
                   }} 
                   status={status} 
                 />
