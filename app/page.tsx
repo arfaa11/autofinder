@@ -1,44 +1,38 @@
 import LeadFormContainer from '@/components/LeadFormContainer'
 import HowItWorks from '@/components/HowItWorks'
 
-/** tell cloudflare that this page is dynamic, 
- * not just a collection of static files */
-// export const runtime = 'edge';
-
-/**
- * home page entry point. 
- * acts as a high-level wrapper for the primary landing page components.
- */
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center">
-      
-      {/* hero and lead capture module. 
-          component manages internal state and dynamic height for multi-step flow.
-      */}
+
+      {/* hero + lead capture */}
       <section className="w-full">
-         <LeadFormContainer />
+        <LeadFormContainer />
       </section>
 
-      {/* product education and trust section */}
+      {/* education / trust */}
       <div className="w-full bg-white">
         <HowItWorks />
       </div>
 
-      {/* conversion-focused footer with regional targeting and social proof */}
-      <footer className="w-full py-16 bg-neutral-50 border-t border-neutral-200">
-        <div className="text-center space-y-3 px-4">
-          <p className="text-lg md:text-xl font-bold text-black uppercase tracking-widest font-montserrat">
+      {/* footer */}
+      <footer className="w-full py-14 bg-neutral-950 relative overflow-hidden">
+        {/* subtle blue glow */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[500px] h-[200px] bg-blue-600 opacity-[0.07] blur-[80px] rounded-full" />
+        </div>
+
+        <div className="relative text-center space-y-3 px-4">
+          <p className="text-base md:text-lg font-black text-white uppercase tracking-[0.2em]">
             trusted by drivers across canada
           </p>
-          <div className="flex flex-col items-center space-y-1">
-            <p className="text-sm text-neutral-500 font-medium">
-              Over 320+ approvals processed just this quarter of 2026.
-            </p>
-            <p className="text-xs text-neutral-400 uppercase tracking-tighter">
-              serving edmonton, ab & surrounding areas
-            </p>
-          </div>
+          <div className="w-12 h-[2px] bg-blue-600 mx-auto rounded-full opacity-60" />
+          <p className="text-sm text-neutral-400 font-medium">
+            Over 320+ approvals processed this quarter of 2026.
+          </p>
+          <p className="text-xs text-neutral-600 uppercase tracking-widest pt-1">
+            serving edmonton, ab &amp; surrounding areas
+          </p>
         </div>
       </footer>
     </div>
