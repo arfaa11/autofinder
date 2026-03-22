@@ -7,53 +7,40 @@ import EmploymentStep from './form/EmploymentStep'
 import IncomeStep from './form/IncomeStep'
 import ContactStep from './form/ContactStep'
 
-/**
- * animation variants for step-based transitions.
- * handles vertical displacement and opacity based on navigation direction.
- */
 const variants = {
-  enter: (direction: number) => ({ y: direction > 0 ? 20 : -20, opacity: 0 }),
+  enter: (direction: number) => ({ y: direction > 0 ? 24 : -24, opacity: 0 }),
   center: { y: 0, opacity: 1 },
-  exit: (direction: number) => ({ y: direction > 0 ? -20 : 20, opacity: 0 }),
+  exit: (direction: number) => ({ y: direction > 0 ? -24 : 24, opacity: 0 }),
 }
 
+const TOTAL_STEPS = 4
+
 export default function LeadFormContainer() {
-  /**
-   * state management for multi-step navigation.
-   * step 0: entry hero section.
-   * step 1-4: data collection sequence.
-   */
   const [[step, direction], setStepWithDirection] = useState([0, 0])
-  
-  // asynchronous submission status tracking
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
-  
-  // centralized form state for lead generation data
   const [formData, setFormData] = useState({
-    vehicle_type: '', 
-    employment_status: '', 
+    vehicle_type: '',
+    employment_status: '',
     monthly_income_range: '',
-    name: '', 
-    city: '', 
-    postal_code: '', 
-    phone: '', 
+    name: '',
+    city: '',
+    postal_code: '',
+    phone: '',
     email: ''
   })
 
-  // updates step index and sets animation directionality
   const paginate = (nextStep: number) => {
-    const dir = nextStep > step ? 1 : -1
-    setStepWithDirection([nextStep, dir])
+    setStepWithDirection([nextStep, nextStep > step ? 1 : -1])
   }
 
-  // functional update for nested form state keys
-  const update = (key: string, value: string) => setFormData(p => ({ ...p, [key]: value }))
+  const update = (key: string, value: string) =>
+    setFormData(p => ({ ...p, [key]: value }))
 
   return (
-    <div className="w-full flex flex-col items-center justify-start py-8 md:py-16 px-4 min-h-[60vh]">
+    <div className="w-full flex flex-col items-center justify-start py-10 md:py-20 px-4">
       <AnimatePresence mode="wait" custom={direction}>
-        
-        {/* entry section - conversion hook and primary cta */}
+
+        {/* ── step 0: hero ──────────────────────────────────── */}
         {step === 0 && (
           <motion.div
             key="hero"
@@ -62,46 +49,57 @@ export default function LeadFormContainer() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="flex flex-col items-center text-center space-y-10 max-w-4xl"
+            transition={{ type: "spring", stiffness: 320, damping: 32 }}
+            className="flex flex-col items-center text-center space-y-10 max-w-3xl w-full"
           >
-            <div className="space-y-6">
-              <h2 className="text-5xl md:text-7xl font-black text-black font-montserrat leading-tight uppercase tracking-tighter">
-                your new car is <br />
+            {/* headline */}
+            <div className="space-y-5">
+              <h2 className="text-5xl md:text-[5.5rem] font-black text-black leading-[1] uppercase tracking-[-0.02em]">
+                your new car is{" "}
+                <br className="hidden md:block" />
                 <span className="text-blue-600">one click away.</span>
               </h2>
-              <p className="text-xl md:text-2xl text-neutral-600 font-medium max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-neutral-500 font-semibold max-w-xl mx-auto leading-relaxed">
                 Edmonton's fastest credit approvals. No matter your history, we have a deal for you.
               </p>
             </div>
 
+            {/* CTA button */}
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0px 20px 40px rgba(37, 99, 235, 0.3)" }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.04, boxShadow: "0px 24px 48px rgba(37, 99, 235, 0.35)" }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => paginate(1)}
-              className="group flex items-center justify-center gap-4 px-10 md:px-12 py-8 bg-blue-600 text-white rounded-full text-1xl md:text-1xl font-black uppercase tracking-widest shadow-xl transition-all"
+              className="group relative flex items-center justify-center gap-4 px-10 py-6 bg-blue-600 text-white rounded-full font-black uppercase tracking-widest text-sm md:text-base shadow-lg overflow-hidden"
             >
-              <span className="leading-none">get approved now</span>
-              <ArrowRight className="group-hover:translate-x-2 transition-transform w-6 h-6 md:w-8 md:h-8" strokeWidth={3} />
+              {/* shine sweep */}
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+              <span className="relative leading-none">get approved now</span>
+              <ArrowRight
+                className="relative group-hover:translate-x-1.5 transition-transform duration-200 w-5 h-5"
+                strokeWidth={3}
+              />
             </motion.button>
 
-            <div className="flex flex-wrap justify-center gap-8 pt-4">
-              <div className="flex items-center gap-2 text-neutral-500 font-bold text-xs uppercase">
-                <Zap size={16} className="text-blue-600" />
-                fast results
-              </div>
-              <div className="flex items-center gap-2 text-neutral-500 font-bold text-xs uppercase">
-                <Lock size={16} className="text-blue-600" />
-                secure & private
-              </div>
-              <div className="flex items-center gap-2 text-neutral-500 font-bold text-xs uppercase">
-                <ShieldCheck size={16} className="text-blue-600" />
-                no obligations
-              </div>
+            {/* trust pills */}
+            <div className="flex flex-wrap justify-center gap-3 pt-2">
+              {[
+                { icon: Zap, label: "fast results" },
+                { icon: Lock, label: "secure & private" },
+                { icon: ShieldCheck, label: "no obligations" },
+              ].map(({ icon: Icon, label }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100 text-neutral-600 font-bold text-xs uppercase tracking-wider"
+                >
+                  <Icon size={13} className="text-blue-600" />
+                  {label}
+                </div>
+              ))}
             </div>
           </motion.div>
         )}
 
-        {/* lead capture sequence - renders conditional sub-steps */}
+        {/* ── steps 1–4: form ───────────────────────────────── */}
         {step > 0 && status !== 'success' && (
           <motion.div
             key={step}
@@ -113,74 +111,120 @@ export default function LeadFormContainer() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="form-container"
           >
-            {/* visual progress indicator */}
-            <div className="flex gap-2 w-full max-w-[200px] mx-auto mb-8">
-              {[1, 2, 3, 4].map((i) => (
-                <div 
-                  key={i} 
-                  className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${i <= step ? 'bg-black' : 'bg-[#aaaaaa]'}`} 
-                />
+            {/* progress bar */}
+            <div className="flex gap-1.5 w-full mb-8">
+              {Array.from({ length: TOTAL_STEPS }, (_, i) => (
+                <div
+                  key={i}
+                  className="h-1 flex-1 rounded-full overflow-hidden bg-neutral-200"
+                >
+                  <motion.div
+                    className="h-full bg-black rounded-full origin-left"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: i < step ? 1 : 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.05 }}
+                  />
+                </div>
               ))}
             </div>
 
-            {/* step-specific form modules */}
+            {/* step label */}
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 text-center mb-6">
+              step {step} of {TOTAL_STEPS}
+            </p>
+
+            {/* step modules */}
             <div>
-              {step === 1 && <VehicleStep onNext={(v) => { update('vehicle_type', v); paginate(2) }} />}
-              {step === 2 && <EmploymentStep onNext={(e) => { update('employment_status', e); paginate(3) }} onBack={() => paginate(1)} />}
-              {step === 3 && <IncomeStep onNext={(i) => { update('monthly_income_range', i); paginate(4) }} onBack={() => paginate(2)} />}
+              {step === 1 && (
+                <VehicleStep onNext={(v) => { update('vehicle_type', v); paginate(2) }} />
+              )}
+              {step === 2 && (
+                <EmploymentStep
+                  onNext={(e) => { update('employment_status', e); paginate(3) }}
+                  onBack={() => paginate(1)}
+                />
+              )}
+              {step === 3 && (
+                <IncomeStep
+                  onNext={(i) => { update('monthly_income_range', i); paginate(4) }}
+                  onBack={() => paginate(2)}
+                />
+              )}
               {step === 4 && (
-                <ContactStep 
-                  onUpdate={update} 
-                  onBack={() => paginate(3)} 
-                  onSubmit={async () => { 
-                    setStatus('submitting'); 
+                <ContactStep
+                  onUpdate={update}
+                  onBack={() => paginate(3)}
+                  onSubmit={async () => {
+                    setStatus('submitting')
                     try {
                       const response = await fetch('/api', {
                         method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData),
-                      });
-
-                      const result = await response.json();
-
+                      })
+                      const result = await response.json()
                       if (result.success) {
-                        setStatus('success'); 
+                        setStatus('success')
                       } else {
-                        alert("Error: " + (result.error || "Submission failed"));
-                        setStatus('idle');
+                        alert("Error: " + (result.error || "Submission failed"))
+                        setStatus('idle')
                       }
                     } catch (err) {
-                      console.error("Submission failed:", err);
-                      alert("Network error. Please try again.");
-                      setStatus('idle');
+                      console.error("Submission failed:", err)
+                      alert("Network error. Please try again.")
+                      setStatus('idle')
                     }
-                  }} 
-                  status={status} 
+                  }}
+                  status={status}
                 />
               )}
             </div>
           </motion.div>
         )}
 
-        {/* post-submission success state */}
+        {/* ── success state ─────────────────────────────────── */}
         {status === 'success' && (
-          <motion.div 
+          <motion.div
             key="success"
             custom={direction}
             variants={variants}
             initial="enter"
             animate="center"
-            className="text-center p-12 bg-white rounded-[2rem] shadow-2xl max-w-md mx-auto"
+            className="flex flex-col items-center text-center p-12 bg-white rounded-[2rem] max-w-md mx-auto"
+            style={{
+              boxShadow:
+                "0 0 0 1px rgba(0,0,0,0.06), 0 24px 64px rgba(0,0,0,0.10)"
+            }}
           >
-            <div className="text-7xl mb-6">🎉</div>
-            <h2 className="text-4xl font-black text-black font-montserrat uppercase">success!</h2>
-            <p className="text-neutral-600 mt-4 text-lg">
-              Our Edmonton team is reviewing your application. Expect a call from us shortly to discuss your options!
+            {/* animated checkmark */}
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+              className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center mb-8 shadow-lg"
+            >
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                <motion.path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                />
+              </svg>
+            </motion.div>
+
+            <h2 className="text-4xl font-black text-black uppercase tracking-tight mb-3">
+              you're in!
+            </h2>
+            <p className="text-neutral-500 text-base font-semibold leading-relaxed">
+              Our Edmonton team is reviewing your application.
+              Expect a call from us shortly to discuss your options.
             </p>
           </motion.div>
         )}
+
       </AnimatePresence>
     </div>
   )
