@@ -91,18 +91,18 @@ const paginate = (nextStep: number) => {
 The Supabase client is initialised server-side using `@supabase/ssr`'s `createServerClient`, which reads and writes sessions via Next.js cookies. This keeps credentials off the client entirely. The `leads` table schema captures:
 
 ```sql
-id                  uuid primary key default gen_random_uuid()
-name                text
-phone               text
-email               text
-vehicle_type        text
-employment_status   text
+id                   uuid primary key default gen_random_uuid()
+name                 text
+phone                text
+email                text
+vehicle_type         text
+employment_status    text
 monthly_income_range text
-city                text
-postal_code         text
-source              text default 'web_form'
-status              text default 'new'
-created_at          timestamptz default now()
+city                 text
+postal_code          text
+source               text default 'web_form'
+status               text default 'new'
+created_at           timestamptz default now()
 ```
 
 ### validation
